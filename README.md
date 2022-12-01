@@ -10,3 +10,12 @@ Required software:
 - platformdirs 2.4.1
 - Rosetta
 - Anaconda
+
+
+`conda install python`
+
+`conda install pandas`
+
+`conda install platformdirs`
+
+`conda install -c schrodinger pymol`
