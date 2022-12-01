@@ -52,7 +52,6 @@ def get_extension():
     
     return extension
 
-
 def relax(pdb_file, rosetta_dir, num_iterations=4):
 
     extension = get_extension()
@@ -62,11 +61,11 @@ def relax(pdb_file, rosetta_dir, num_iterations=4):
     logfile = f"{output_dir}/{pdb_file_no_extension}.log"
     
     print(f"Relaxing {pdb_file} {num_iterations} time(s)\nLog file: {logfile}")
-    # run_command(f"{rosetta_dir}/main/source/bin/relax.{extension} -database {rosetta_dir}/main/database -s {pdb_file} -score:weights ref2015_cart -relax:constrain_relax_to_start_coords -relax:cartesian -relax:ramp_constraints false -out:suffix _relaxed -nstruct {num_iterations} -out:path:score {output_dir} -out:path:pdb {output_dir} > {logfile}")
+    run_command(f"{rosetta_dir}/main/source/bin/relax.{extension} -database {rosetta_dir}/main/database -s {pdb_file} -nstruct {num_iterations} -out:path:score {output_dir} -out:path:pdb {output_dir} -score:weights ref2015_cart -relax:constrain_relax_to_start_coords -relax:cartesian -relax:ramp_constraints false -out:suffix _relaxed > {logfile}")
     
     relaxed_threaded_total_score = {}
     
-    for index in range(1, num_iterations+1):
+    for index in range(1, int(num_iterations)+1):
         relaxed_threaded_filename = f"{pdb_file_no_extension}_relaxed_{str(index).zfill(4)}"
         total_score = run_command(f"cat {output_dir}/score_relaxed.sc | grep {relaxed_threaded_filename}"+" | tail -1 | awk '{print $2}'")
         if total_score == '': continue

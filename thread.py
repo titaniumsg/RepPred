@@ -11,7 +11,9 @@ import pyrosetta
 from pyrosetta import pose_from_sequence, pose_from_pdb
 from pyrosetta.rosetta.core.sequence import read_aln
 from pyrosetta.rosetta.protocols.comparative_modeling import PartialThreadingMover
-pyrosetta.init()
+
+# import custom libraries
+from constants import *
 
 '''
 Threads inputted peptide and HLA sequence onto template structure
@@ -36,7 +38,7 @@ def get_sequence(pdb_file, chain_list):
 def split_and_renumber(pdb_file, mhc_chain, pep_chain):
     
     '''
-    Remodel spits out the PDB file with concatenated chains.
+    Remodel outputs the PDB file with concatenated chains.
 
     Assumes residue 1-180 is MHC chain and residue 181- is peptide chain
     
@@ -53,10 +55,14 @@ def split_and_renumber(pdb_file, mhc_chain, pep_chain):
 
 def thread(template, output_prefix, peptide_sequence, hla_sequence):
 
-    threaded_filename = f"{output_prefix}_{os.path.split(template)[1]}"
-    return threaded_filename
+    pyrosetta.init()
+
+    pdb_file_base = os.path.basename(template)
+    pdb_file_no_extension = os.path.splitext(pdb_file_base)[0]
+    threaded_filename = f"{output_prefix}_{pdb_file_no_extension}_threaded.pdb"
+
     target_seq = hla_sequence+peptide_sequence
-    template_seq = get_sequence(template, chain_list=['A', 'B'])  # should be 180 + 9 = 189 residues
+    template_seq = get_sequence(template, chain_list=[MHC_CHAIN, PEP_CHAIN])  # should be 180 + 9 = 189 residues
     
     # make grishin file
     with open(f"{output_prefix}.grishin", "w") as grishinfile:
@@ -76,6 +82,6 @@ def thread(template, output_prefix, peptide_sequence, hla_sequence):
         thread.apply(new_pose)
         new_pose.dump_pdb(threaded_filename)
 
-        split_and_renumber(threaded_filename, 'A', 'B')
+        split_and_renumber(threaded_filename, MHC_CHAIN, PEP_CHAIN)
     
     return threaded_filename

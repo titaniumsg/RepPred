@@ -1,19 +1,25 @@
 '''
-score_decoys.py
+scoring.py
 PyRosetta4/python3 script for generating score function features for SVR selection.
 Works for any length of peptide, but note that the selection models only predict for nonameric peptides.
 -- GLJ Keller
 '''
+
+#       Sgourakis Lab
+#   Modified by: Sagar Gupta
+#   Date: November 29, 2022
+#   Email: sagarg@sas.upenn.edu
+
 import os
 import pyrosetta
 from pyrosetta import pose_from_pdb
 from pyrosetta.rosetta.core.scoring import *
 from constants import *
 
-pyrosetta.init(extra_options = "-extrachi_cutoff 12 -ex1 -ex2 -ex3 -ignore_zero_occupancy false")
-scorefxn = pyrosetta.create_score_function('ref2015_cart')
-
 def scoring(model, name, outputfile):
+
+	pyrosetta.init(extra_options="-extrachi_cutoff 12 -ex1 -ex2 -ex3 -ignore_zero_occupancy false")
+	scorefxn = pyrosetta.create_score_function('ref2015_cart')
 
 	outData = feature_headers(9)
 
