@@ -41,6 +41,20 @@ def run_command(command, ignore=False):
         
         return output
 
+def submit_to_cluster(command):
+
+    with open("submit.sh", "w") as bashfile:
+        bashfile.write("#!/bin/bash\n")
+        bashfile.write("#SBATCH --time=2-23:59:59\n")
+        bashfile.write(". /etc/profile\n")
+        bashfile.write("module load OpenMPI/3.1.4-GCC-8.3.0\n")
+        bashfile.write("unset module\n")
+
+        bashfile.write(f"mpirun -n 3 {command}")
+
+    run_command("sbatch submit.sh")
+
+
 def get_extension():
     
     os_system = platform.system()
@@ -61,7 +75,9 @@ def relax(pdb_file, rosetta_dir, num_iterations=4):
     logfile = f"{output_dir}/{pdb_file_no_extension}.log"
     
     print(f"Relaxing {pdb_file} {num_iterations} time(s)\nLog file: {logfile}")
-    run_command(f"{rosetta_dir}/main/source/bin/relax.{extension} -database {rosetta_dir}/main/database -s {pdb_file} -nstruct {num_iterations} -out:path:score {output_dir} -out:path:pdb {output_dir} -score:weights ref2015_cart -relax:constrain_relax_to_start_coords -relax:cartesian -relax:ramp_constraints false -out:suffix _relaxed > {logfile}")
+    # run_command(f"{rosetta_dir}/main/source/bin/relax.mpi.{extension} -database {rosetta_dir}/main/database -s {pdb_file} -nstruct {num_iterations} -out:path:score {output_dir} -out:path:pdb {output_dir} -score:weights ref2015_cart -relax:constrain_relax_to_start_coords -relax:cartesian -relax:ramp_constraints false -out:suffix _relaxed > {logfile}")
+    submit_to_cluster(f"{rosetta_dir}/main/source/bin/relax.mpi.{extension} -database {rosetta_dir}/main/database -s {pdb_file} -nstruct {num_iterations} -out:path:score {output_dir} -out:path:pdb {output_dir} -score:weights ref2015_cart -relax:constrain_relax_to_start_coords -relax:cartesian -relax:ramp_constraints false -out:suffix _relaxed > {logfile}")
+    quit()
     
     relaxed_threaded_total_score = {}
     
