@@ -51,22 +51,21 @@ def main(peptide_sequence, output_dir, prefix, num_iterations):
 
     structural_templates = sorted(glob.glob(f"{REP_PRED_DIR}/templates/*.pdb"))
     for template in tqdm(structural_templates):
-        # if template != f'{REP_PRED_DIR}/templates/1A1M_reordered_const_cart_relaxed_0001.pdb': continue
+        if template != f'{REP_PRED_DIR}/templates/1A1M_reordered_const_cart_relaxed_0001.pdb': continue
         
         threaded_filename = thread(template, f"{output_dir}/{prefix}", peptide_sequence, A0201_HLA_SEQUENCE)
 
         relaxed_threaded_filename, relaxed_threaded_best = relax(threaded_filename, ROSETTA_DIR, num_iterations)
 
-        # scorefile = f"{output_dir}/{relaxed_threaded_best}.csv"
+        scorefile = f"{output_dir}/{relaxed_threaded_best}.csv"
 
-        # scoring(relaxed_threaded_filename, relaxed_threaded_best, scorefile)
+        scoring(relaxed_threaded_filename, relaxed_threaded_best, scorefile)
 
-        # data = pd.read_csv(scorefile)
-        # data.drop(['target_on_template', 'totalScore'], axis=1, inplace=True)
-        # data_scaled = scaler.transform(data)
-        # predicted_dscore = model.predict(data_scaled)
-        # predicted_dscore_dict[relaxed_threaded_filename] = predicted_dscore[0]
-        quit()
+        data = pd.read_csv(scorefile)
+        data.drop(['target_on_template', 'totalScore'], axis=1, inplace=True)
+        data_scaled = scaler.transform(data)
+        predicted_dscore = model.predict(data_scaled)
+        predicted_dscore_dict[relaxed_threaded_filename] = predicted_dscore[0]
     
     predicted_dscore_dict = dict(sorted(predicted_dscore_dict.items(), key=lambda item: item[1])) # sort dictionary by predicted D-score
     best_model = min(predicted_dscore_dict, key=predicted_dscore_dict.get)
