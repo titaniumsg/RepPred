@@ -1,5 +1,5 @@
 # RepPred
-Structural modeling of peptide/HLA-A*02:01 complexes
+Structural modeling of peptide/HLA complexes
 
 Required software:
 - Python 3.6+ (tested in 3.8.12)
