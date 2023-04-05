@@ -1,0 +1,17 @@
+name: hla3db
+ 
+channels:
+  - defaults
+  - schrodinger
+  - https://levinthal:paradox@conda.graylab.jhu.edu
+dependencies:
+    - python=3.8
+    - pip
+    - pandas
+    - platformdirs
+    - pymol
+    - tqdm
+    - pyrosetta  
+    - pip:
+      - biopython
+      - scikit-learn

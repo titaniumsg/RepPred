@@ -1,0 +1,2 @@
+/scr1/users/guptas10/anaconda3/envs/py38/lib/python3.8/site-packages/Bio/PDB/PDBParser.py:395: PDBConstructionWarning: Ignoring unrecognized record 'END' at line 3029
+  warnings.warn(

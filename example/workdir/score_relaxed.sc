@@ -1,3 +1,0 @@
-SEQUENCE: 
-SCORE: total_score cart_bonded coordinate_constraint dslf_fa13    fa_atr    fa_dun   fa_elec fa_intra_rep fa_intra_sol_xover4              fa_rep              fa_sol hbond_bb_sc hbond_lr_bb    hbond_sc hbond_sr_bb lk_ball_wtd       omega     p_aa_pp rama_prepro         ref yhh_planarity description 
-SCORE:    -588.139      88.457                21.326    -1.339 -1144.770   229.165  -418.570        2.464              38.367             108.817             736.543     -43.137     -62.903     -45.309     -77.463     -26.088       3.107     -27.255      -7.679      37.467         0.661 test_1A1M_reordered_const_cart_relaxed_0001_threaded_relaxed_0001

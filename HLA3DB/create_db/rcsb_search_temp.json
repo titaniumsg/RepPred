@@ -1,0 +1,102 @@
+{
+  "query": {
+    "type": "group",
+    "logical_operator": "and",
+    "nodes": [
+      {
+        "type": "group",
+        "nodes": [
+          {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_polymer_entity.rcsb_macromolecular_names_combined.name",
+              "operator": "contains_words",
+              "negation": false,
+              "value": "MHC"
+            }
+          },
+          {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_polymer_entity.rcsb_macromolecular_names_combined.name",
+              "operator": "contains_phrase",
+              "negation": false,
+              "value": "HLA"
+            }
+          },
+          {
+            "type": "terminal",
+            "label": "text",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_entity_source_organism.rcsb_gene_name.value",
+              "negation": false,
+              "operator": "in",
+              "value": [
+                "HLA-A",
+                "HLA-B",
+                "HLA-C",
+                "HLA-E",
+                "HLA-G"
+              ]
+            }
+          }
+        ],
+        "logical_operator": "or"
+      },
+      {
+        "type": "group",
+        "nodes": [
+          {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_entity_source_organism.taxonomy_lineage.name",
+              "operator": "exact_match",
+              "negation": false,
+              "value": "Homo sapiens"
+            }
+          },
+          {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_entry_info.resolution_combined",
+              "operator": "less_or_equal",
+              "negation": false,
+              "value": 3.0
+            }
+          },
+          {
+            "type": "terminal",
+            "service": "text",
+            "parameters": {
+              "attribute": "rcsb_accession_info.initial_release_date",
+              "operator": "greater_or_equal",
+              "negation": false,
+              "value": "2024-01-01T00:00:00Z"
+            }
+          }
+        ],
+        "logical_operator": "and"
+      }
+    ],
+    "label": "text"
+  },
+  "return_type": "entry",
+  "request_options": {
+    "paginate": {
+      "start": 0,
+      "rows": 100000
+    },
+    "scoring_strategy": "combined",
+    "sort": [
+      {
+        "sort_by": "rcsb_entry_info.resolution_combined",
+        "direction": "asc"
+      }
+    ]
+  }
+}
