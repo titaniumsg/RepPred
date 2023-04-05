@@ -39,6 +39,9 @@ Installation:
 An auto-updating, curated version of HLA3DB is readily accessible via https://hla3db.research.chop.edu/ for download.
 We also provide the option to locally generate the database below.
 
+The database provided in HLA3DB/create_db/lib/ was updated as of April 4th, 2023.
+The corresponding statistics can be found in db_stats/database.csv
+
 Please ensure the appropriate conda environment is activated:
     "conda activate hla3db"
 
@@ -50,7 +53,7 @@ DATABASE CREATION:
 
 HLA3DB STATISTICS:
     Must be done AFTER creating HLA3DB
-    1. Run "bash db_stats.sh". Script takes ~5 mins to run on a normal desktop computer.
+    1. Run "bash db_stats.sh". Script takes ~30 mins to run on a normal desktop computer.
     2. Output can be found in "db_stats/database.csv"
 
 
@@ -59,6 +62,9 @@ HLA3DB STATISTICS:
 
 Please ensure the appropriate conda environment is activated:
     "conda activate hla3db"
+
+An example input can be found in the 'input_sequence' folder and
+an example output can be found in the 'model_predictions' folder.
 
 INPUT:
 
@@ -71,11 +77,11 @@ CODE USAGE:
 
     Step 1:
 
-	   python representative_modeling.py <folder> <option>
+	   bash run_RepPred.sh <option> <rosetta_dir>
 
-       This steps assumes query sequences are provided in the <folder>: 'input_sequence'
 	   Code is written to run either on a hpc-cluster with slurm scheduler (<option>: hpc) 
 	   or a local machine (<option>: local)
+       The local Rosetta directory also need to be provided via <rosetta_dir>
 
   	Step 2:    
 
@@ -89,13 +95,10 @@ CODE USAGE:
 
 RUNTIME: 
 	
-       We strongly reccomend running the code in an hpc environment, this should take approximatly 
+       We strongly reccomend running the code in an hpc environment, this should take approximately 
 	   20-30 minutes depending on the query peptide. 
 
        When run on a local machine the runtime will be approximately 15 hours.
-
-       The above runtime also depend on the Rosetta relax options used. The default option is 'cartesian relax'.
-       Users can opt for other relax options provided in 'run_rosetta_model.sh'.
 
 NOTE:
      

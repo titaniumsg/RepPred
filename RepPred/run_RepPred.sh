@@ -22,9 +22,8 @@ exit
 EOF
 }
 
-seqpath=${1}
-cluster_opt=${2}
-rosetta_dir=${3}
+cluster_opt=${1}
+rosetta_dir=${2}
 
 mkdir -p run-dir
 mkdir -p run-dir/relaxed_structures
@@ -38,7 +37,7 @@ mkdir -p time_data
 
 relax_method='cartesian'
 
-for targets in ${seqpath}/*.txt; do
+for targets in input_sequence/*.txt; do
 	targname=$(echo ${targets} | cut -f 2 -d '/' | cut -f 1 -d '_')
 	mkdir run-dir/${targname}
 	for templates in template_pdbs/*.pdb; do

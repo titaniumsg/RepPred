@@ -12,10 +12,10 @@ pdbname=${rundir}/${target}/${target}_on_${template}_reordered.pdb
 outdir=$(echo ${rundir}/relaxed_structures/${target}_on_${template})
 
 if [[ "${cluster_opt}" == "hpc" ]]; then
-	mpirun -np 4 ${rosetta_dir}/source/bin/relax.mpi.linuxgccrelease -s ${pdbname} -database ${rosetta_dir}/database -score:weights ref2015_cart  -relax:cartesian  -relax:constrain_relax_to_start_coords -relax:ramp_constraints false -out:suffix _relaxed -nstruct 4 -out:path:score ${outdir} -out:path:pdb ${outdir}
+	mpirun -np 4 ${rosetta_dir}/source/bin/relax.mpi.linuxgccrelease -s ${pdbname} -database ${rosetta_dir}/database -score:weights ref2015_cart -relax:cartesian -relax:constrain_relax_to_start_coords -relax:ramp_constraints false -out:suffix _relaxed -nstruct 4 -out:path:score ${outdir} -out:path:pdb ${outdir}
 
 else
-	${rosetta_dir}/source/bin/relax.macosclangrelease -s ${pdbname} -database ${rosetta_dir}/database -score:weights ref2015_cart  -relax:cartesian  -relax:constrain_relax_to_start_coords -relax:ramp_constraints false -out:suffix _relaxed -nstruct 4 -out:path:score ${outdir} -out:path:pdb ${outdir}
+	${rosetta_dir}/source/bin/relax.macosclangrelease -s ${pdbname} -database ${rosetta_dir}/database -score:weights ref2015_cart -relax:cartesian -relax:constrain_relax_to_start_coords -relax:ramp_constraints false -out:suffix _relaxed -nstruct 4 -out:path:score ${outdir} -out:path:pdb ${outdir}
 
 fi
 
