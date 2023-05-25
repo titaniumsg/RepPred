@@ -811,7 +811,7 @@ def reorder_chains(filename, infile, mhc_chain, pep_chain):
     for line in readfilehandler:
         fields = line.split()
         if len(fields) >= 5:
-            chain = fields[4]
+            chain = fields[21]
             coordinates[chain].append(line)
     readfilehandler.close()
 
