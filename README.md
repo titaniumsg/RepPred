@@ -26,7 +26,7 @@ To run RepPred, we recommend using an HPC. We have configured our code for a slu
 
 
 #### Installation:
-1.  Modify the "environment.yml" file to include the appropriate "username" and "password" for PyRosetta installation. 
+1.  Modify the `environment.yml` file to include the appropriate `username` and `password` for PyRosetta installation. 
 A license can be obtained via: https://els2.comotion.uw.edu/product/pyrosetta
 2. Create a conda environment using the provided YAML file using the following command:
 `conda env create -f environment.yml`
