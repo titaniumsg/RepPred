@@ -1,8 +1,8 @@
 # HLA3DB and RepPred
 
- #### For a detailed description of the methods, please refer to the article:
-    "Gupta, et al. HLA3DB: comprehensive annotation of peptide/HLA complexes enables blind structure prediction of T cell epitopes. 
-    bioRxiv. doi.org/10.1101/2023.03.20.533510"
+ #### For a detailed description of the methods, please refer to the [article](https://doi.org/10.1101/2023.03.20.533510):
+Gupta S, Nerli S, Kandy SK, Mersky GL, Sgourakis NG. HLA3DB: comprehensive annotation of peptide/HLA complexes enables blind structure prediction of T cell epitopes. (2023). bioRxiv. doi.org/10.1101/2023.03.20.533510.
+
 Corresponding author: Nikolaos G. Sgourakis, nikolaos.sgourakis@pennmedicine.upenn.edu
 
 
