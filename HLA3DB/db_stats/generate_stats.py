@@ -19,6 +19,7 @@ from misc.common import run_command, read_all_dihedrals
 
 from db_stats.peptide_dihedrals.dihedrals import get_dihedrals
 from db_stats.anchor_class.anchor_class import get_anchor_class
+from db_stats.greedy_classification.greedy_classification import get_anchor_class
 
 import time
 startTime = time.time()
@@ -30,11 +31,14 @@ def create_db():
     pdb_dict = fasta.get_pdb_dict()
     all_headers = list(fasta.get_headers())
 
-    get_anchor_class(pdb_dict)
+    # get_anchor_class(pdb_dict)
 
     for pep_len in range(PEP_LOWER, PEP_UPPER+1):
         pdb_dict_temp = fasta.get_pdb_dict(pep_len)
-        get_dihedrals(pdb_dict_temp, pep_len)
+        # get_dihedrals(pdb_dict_temp, pep_len)
+
+    create_greedy_classes(pdb_dict, 6)
+    quit()
 
     '''
 

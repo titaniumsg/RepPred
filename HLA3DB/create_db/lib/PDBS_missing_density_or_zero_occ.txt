@@ -1,12 +1,3 @@
-3SKO Missing density in MHC heavy chain
-3SKM Missing density in MHC heavy chain
-5WMR Missing density in MHC heavy chain
-7SIG Missing density in MHC heavy chain
-7SA2 Missing density in MHC heavy chain
-1M05 Missing density in MHC heavy chain
-8ESH Missing density in MHC heavy chain
-4QRT Missing density in MHC heavy chain
 4QRU Missing density in MHC heavy chain
-4QRQ Missing density in MHC heavy chain
-6EWO Zero occupancy found in MHC heavy chain
-6EWA Zero occupancy found in MHC heavy chain
+3SKO Missing density in MHC heavy chain
+4QRT Missing density in MHC heavy chain

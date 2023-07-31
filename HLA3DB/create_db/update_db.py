@@ -522,7 +522,7 @@ def run_remodel(pdbfile, mhc_chain, pep_chain, residues_to_insert, rosettainstal
 
     # this command may need to be changed based on Rosetta version
     # remodel.static instead of remodel depending on user files
-    run_command(f"{rosettainstalldir}/main/source/bin/remodel.{extension} -database {rosettainstalldir}/main/database -s {pdbfile} -remodel:blueprint test_updated.remodel -remodel::num_trajectory 1")
+    run_command(f"{rosettainstalldir}/main/source/bin/remodel.static.{extension} -database {rosettainstalldir}/main/database -s {pdbfile} -remodel:blueprint test_updated.remodel -remodel::num_trajectory 1")
     # run_command(f"{rosettainstalldir}/main/source/bin/remodel.mpi.{extension} -database {rosettainstalldir}/main/database -s {pdbfile} -remodel:blueprint test_updated.remodel -remodel::num_trajectory 1")
 
     new_pdbfile = pdbfile.replace(".pdb", "_0001.pdb")
@@ -570,6 +570,7 @@ def split_pep_mhc_chains(targetfile, mhc_chain, pep_chain):
     cmd.load(targetfile)
     cmd.alter('resi 1-180', f"chain='{mhc_chain}'")
     cmd.alter("resi 181-", f"chain='{pep_chain}'")
+    cmd.sort()
     cmd.save(targetfile)
     cmd.delete("all")
 
@@ -587,7 +588,7 @@ def renumber_residues(targetfile, begin=1):
     for chain in chains:
         start = begin - start_resid[chain]
         cmd.alter(f"chain {chain}", f"resi=str(int(resi)+{start})")
-
+    cmd.sort()
     cmd.save(targetfile)
     cmd.delete("all")
 
@@ -811,7 +812,7 @@ def reorder_chains(filename, infile, mhc_chain, pep_chain):
     for line in readfilehandler:
         fields = line.split()
         if len(fields) >= 5:
-            chain = fields[21]
+            chain = line[21]
             coordinates[chain].append(line)
     readfilehandler.close()
 
@@ -844,6 +845,7 @@ def rename_chains(pdbfile, mhc_chain, pep_chain):
         cmd.alter(f'chain {pep_chain}', f"chain = '{pep_chain}123'")
         cmd.alter(f'chain {mhc_chain}', f"chain = '{DEFAULT_MHC_CHAIN}'")
         cmd.alter(f'chain {pep_chain}123', f"chain = '{DEFAULT_PEP_CHAIN}'")
+        cmd.sort()
         cmd.save(pdbfile)
         cmd.delete("all")
 
@@ -994,13 +996,17 @@ def update_db(rosettainstalldir, start_fasta, date=None, debug_pdbid=None):
     ignore_receptors_list = []
     zero_occupancy_pep_list = []
     zero_occupancy_mhc_list = []
-    chain_truncated = []
     duplicates_num = 0
     approved = 0
 
+    file = FASTA(f"PDBS_OG.fasta")
+    file.read()
+    pdb_dict = file.get_pdb_dict()
+    pdbs_to_curate = list(pdb_dict.keys())
+
     examined_pdbids = []
     print(f'PDBs to curate: {len(pdbs_to_curate)}')
-
+    
     for pdbid in pdbs_to_curate:
 
         examined_pdbids.append(pdbid)

@@ -32,7 +32,7 @@ DEFAULT_PEP_CHAIN = 'B'
 MHC_SEQ_MOTIF_SHS = 'SHS'
 MHC_SEQ_MOTIF_HS = 'HS'
 
-DATABASE_SCRIPT_PATH = "/Users/titanium/Downloads/RepPred/hla3db"
+DATABASE_SCRIPT_PATH = "/Users/titanium/Downloads/RepPred/HLA3DB"
 ROSETTA_INSTALL_DIR = "/rosetta/"
 
 SINGLE_DIST_THRESHOLD = 1.0 # Distance score threshold for every single dihedral angle pair
