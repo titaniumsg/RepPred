@@ -19,7 +19,7 @@ from misc.common import run_command, read_all_dihedrals
 
 from db_stats.peptide_dihedrals.dihedrals import get_dihedrals
 from db_stats.anchor_class.anchor_class import get_anchor_class
-from db_stats.greedy_classification.greedy_classification import get_anchor_class
+from db_stats.greedy_classification.greedy_classification import create_greedy_classes
 
 import time
 startTime = time.time()
@@ -38,7 +38,8 @@ def create_db():
         # get_dihedrals(pdb_dict_temp, pep_len)
 
     create_greedy_classes(pdb_dict, 6)
-    quit()
+    create_greedy_classes(pdb_dict, 7)
+    create_greedy_classes(pdb_dict, 8)
 
     '''
 
@@ -71,6 +72,7 @@ def create_db():
                         "peptide_sequence", "peptide_length",
                         "full_allele", "supertype", "allele_sequence", "mutation",
                         "anchor_class",
+                        "greedy_class",
                         "phi_4", "psi_4", "phi_5", "psi_5", "phi_6", "psi_6", "phi_7", "psi_7"])
         
         for pdbid, pep_allele in tqdm(pdb_dict.items()):
@@ -102,6 +104,20 @@ def create_db():
             anchor_info = run_command(f"cat {DATABASE_SCRIPT_PATH}/db_stats/anchor_class/anchor_class.csv | grep '{pdbid},'").strip()
             anchor_class = int(anchor_info.split(",")[1])
 
+            greedy_class_number = "NA"  # none should have this...
+            try:
+                greedy_class_info = run_command(f"cat {DATABASE_SCRIPT_PATH}/db_stats/greedy_classification/greedy_anchor{anchor_class}.txt | grep '{pdbid},'", ignore=True).strip()
+                greedy_class_number = greedy_class_info.split("\t")[0]
+            except:
+                greedy_class_info = run_command(f"cat {DATABASE_SCRIPT_PATH}/db_stats/greedy_classification/greedy_anchor{anchor_class}.txt | grep '{pdbid}$'", ignore=True).strip()
+                greedy_class_number = greedy_class_info.split("\t")[0]
+
+            if greedy_class_number == "NA":
+                print(pdbid, anchor_class)
+                quit()
+            
+            greedy_class_number = f"{anchor_class}-{greedy_class_number}"
+
             dihedrals = ["NA"]*8
 
             if peptide_length == 8:
@@ -116,7 +132,8 @@ def create_db():
             row = [pdbid, year, resolution,
                             peptide_sequence, peptide_length,
                             full_allele, supertype, allele_sequence, mutation,
-                            anchor_class] + dihedrals
+                            anchor_class,
+                   greedy_class_number] + dihedrals
             writer.writerow(row)
 
     executionTime = (time.time() - startTime)
