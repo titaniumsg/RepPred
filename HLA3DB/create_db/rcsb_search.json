@@ -89,7 +89,7 @@
   "request_options": {
     "paginate": {
       "start": 0,
-      "rows": 100000
+      "rows": 10000
     },
     "scoring_strategy": "combined",
     "sort": [
