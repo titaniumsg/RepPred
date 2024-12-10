@@ -186,7 +186,7 @@ def get_pdb(pdbid):
     """
 
     try:
-        pdblist = PDBList()
+        pdblist = PDBList(server="https://files.wwpdb.org")
 
         pdbfile = "temp1/"+pdbid.lower()+".pdb"
         if not os.path.exists(pdbfile):
